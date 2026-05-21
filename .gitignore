@@ -1,0 +1,17 @@
+.dub
+docs.json
+__dummy.html
+docs/
+/javascriptcore6testing
+javascriptcore6testing.so
+javascriptcore6testing.dylib
+javascriptcore6testing.dll
+libjavascriptcore6testing.a
+javascriptcore6testing.a
+javascriptcore6testing.lib
+javascriptcore6testing-test-*
+*.exe
+*.pdb
+*.o
+*.obj
+*.lst
