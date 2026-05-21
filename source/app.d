@@ -41,7 +41,7 @@ void main() {
 	import core.stdc.stdlib;
 
 	// Not sure where this goes?
-	const(char)* stringTest = cast(const(char*)) malloc(1);
+	const(char)* stringTest;
 
 	extern (C) const(char)* callback(float number) {
 		import std.string;
