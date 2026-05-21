@@ -38,6 +38,8 @@ void main() {
 	... (this is variadic)       = (nothing)
 	*/
 
+	void* userData = null;
+
 	extern (C) void callback() {
 		writeln("I am a callback!");
 	}
@@ -47,6 +49,6 @@ void main() {
 
 	jsc_context_set_value(cast(JSCContext*) context._cPtr, "test", test);
 
-	eval("test();");
+	eval("test(1);");
 
 }
