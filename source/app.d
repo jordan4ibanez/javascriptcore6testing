@@ -39,7 +39,7 @@ void main() {
 	... (this is variadic)       = A list of GTypes, one for each parameter.
 	*/
 
-	import core.stdc.stdlib;
+	import std.string;
 
 	// Not sure where this goes?
 	const(char)* stringTest;
