@@ -21,4 +21,17 @@ void main() {
 		writeln(except.toString_);
 	}
 
+	/*
+	JSCContext* context
+	const(char)* name
+	GCallback callback
+	void* userData
+	GDestroyNotify destroyNotify
+	GType returnType
+	uint nParams
+	... (this is variadic)
+	*/
+
+	jsc_value_new_function(context._cPtr, "test", null, null);
+
 }
