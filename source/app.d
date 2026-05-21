@@ -15,12 +15,14 @@ void main() {
 	// And then get the VM.
 	VirtualMachine vm = context.getVirtualMachine();
 
-	context.evaluate("console.log('hi')");
+	void eval(string jsCode) {
+		context.evaluate("console.log('hi')");
 
-	// This is how you check for errors.
-	ExceptionWrap except = context.getException();
-	if (except !is null) {
-		writeln(except.toString_);
+		// This is how you check for errors.
+		ExceptionWrap except = context.getException();
+		if (except !is null) {
+			writeln(except.toString_);
+		}
 	}
 
 	// alias extern(C) void function() GCallback;
