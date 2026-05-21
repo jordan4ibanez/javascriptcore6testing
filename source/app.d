@@ -74,4 +74,6 @@ void main() {
 
 	writeln(stringTest[0 .. 11]);
 
+	context.destroy();
+
 }
