@@ -41,12 +41,10 @@ void main() {
 
 	import std.string;
 
-	// Not sure where this goes?
-	const(char)* stringTest;
+	extern (C) const(char)* callback(float number, const(char)* userData) {
+		import core.stdc.stdlib;
 
-	extern (C) const(char)* callback(float number) {
-		import std.string;
-
+		// Passed in from javascript.
 		writeln("I am a callback! also: ", number);
 
 		// I can't figure out how to not make this crash so let's just use C.
