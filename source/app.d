@@ -29,7 +29,7 @@ void main() {
 	// alias extern(C) void function() GCallback;
 	/*
 	JSCContext* context          = cast(JSCContext*) context._cPtr
-	const(char)* name            = "test"
+	const(char)* name            = null (assigned after)
 	GCallback callback           = callback
 	void* userData               = null
 	GDestroyNotify destroyNotify = null
@@ -43,7 +43,9 @@ void main() {
 	}
 
 	JSCValue* test =
-		jsc_value_new_function(cast(JSCContext*) context._cPtr, "test", &callback, null, null, GTypeFlags.None, 0);
+		jsc_value_new_function(cast(JSCContext*) context._cPtr, null, &callback, null, null, GTypeEnum.None, 0);
+
+	jsc_context_set_value(cast(JSCContext*) context._cPtr, "test", test);
 
 	eval("test();");
 
