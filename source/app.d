@@ -24,6 +24,7 @@ void main() {
 		if (except !is null) {
 			writeln(except.toString_);
 		}
+		return output;
 	}
 
 	// alias extern(C) void function() GCallback;
