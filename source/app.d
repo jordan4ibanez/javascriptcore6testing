@@ -23,10 +23,11 @@ void main() {
 		writeln(except.toString_);
 	}
 
+	// alias extern(C) void function() GCallback;
 	/*
 	JSCContext* context          = cast(JSCContext*) context._cPtr
 	const(char)* name            = "test"
-	GCallback callback           = null
+	GCallback callback           = callback
 	void* userData               = null
 	GDestroyNotify destroyNotify = null
 	GType returnType             = GTypeFlags.None
@@ -34,6 +35,10 @@ void main() {
 	... (this is variadic)       = (nothing)
 	*/
 
-	jsc_value_new_function(cast(JSCContext*) context._cPtr, "test", null, null, GTypeFlags.None, 0);
+	extern (C) void callback() {
+		writeln("I am a callback!");
+	}
+
+	jsc_value_new_function(cast(JSCContext*) context._cPtr, "test", &callback, null, null, GTypeFlags.None, 0);
 
 }
