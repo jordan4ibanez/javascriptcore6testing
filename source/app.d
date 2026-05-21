@@ -38,11 +38,24 @@ void main() {
 	... (this is variadic)       = A list of GTypes, one for each parameter.
 	*/
 
-	// Not sure where this goes?
-	const(char)* stringTest;
+	import core.stdc.stdlib;
 
-	extern (C) void callback(float one) {
-		writeln("I am a callback! also: ", one);
+	// Not sure where this goes?
+	const(char)* stringTest = cast(const(char*)) malloc(1);
+
+	extern (C) const(char)* callback(float number) {
+		import std.string;
+
+		writeln("I am a callback! also: ", number);
+
+		// I can't figure out how to not make this crash so let's just use C.
+		const hl = "hello world";
+
+		char* retVal = cast(char*) malloc(char.sizeof * hl.length + 1);
+
+		retVal[0 .. hl.length + 1] = hl ~ '\0';
+
+		return retVal;
 	}
 
 	JSCValue* test =
