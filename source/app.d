@@ -16,7 +16,7 @@ void main() {
 	VirtualMachine vm = context.getVirtualMachine();
 
 	void eval(string jsCode) {
-		context.evaluate("console.log('hi')");
+		context.evaluate(jsCode);
 
 		// This is how you check for errors.
 		ExceptionWrap except = context.getException();
