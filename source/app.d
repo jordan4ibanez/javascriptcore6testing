@@ -1,3 +1,4 @@
+import gobject.types;
 import javascriptcore.c.functions;
 import javascriptcore.c.types;
 import javascriptcore.context;
