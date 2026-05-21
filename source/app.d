@@ -1,4 +1,5 @@
 import javascriptcore.c.functions;
+import javascriptcore.c.types;
 import javascriptcore.context;
 import javascriptcore.exception;
 import javascriptcore.global;
@@ -23,7 +24,7 @@ void main() {
 	}
 
 	/*
-	JSCContext* context          = context._cPtr
+	JSCContext* context          = cast(JSCContext*) context._cPtr
 	const(char)* name            = "test"
 	GCallback callback           = null
 	void* userData               = null
@@ -33,6 +34,6 @@ void main() {
 	... (this is variadic)       = (nothing)
 	*/
 
-	jsc_value_new_function(context._cPtr, "test", null, null, GTypeFlags.None, 0);
+	jsc_value_new_function(cast(JSCContext*) context._cPtr, "test", null, null, GTypeFlags.None, 0);
 
 }
