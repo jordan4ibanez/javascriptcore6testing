@@ -31,7 +31,7 @@ void main() {
 	JSCContext* context          = cast(JSCContext*) context._cPtr
 	const(char)* name            = null (assigned after)
 	GCallback callback           = cast(GCallback)&callback
-	void* userData               = userData
+	void* userData               = stringTest
 	GDestroyNotify destroyNotify = null
 	GType returnType             = GTypeFlags.None
 	uint nParams                 = 1
@@ -39,7 +39,7 @@ void main() {
 	*/
 
 	// Not sure where this goes?
-	void* userData;
+	const(char)* stringTest;
 
 	extern (C) void callback(float one) {
 		writeln("I am a callback! also: ", one);
@@ -48,7 +48,7 @@ void main() {
 	JSCValue* test =
 		jsc_value_new_function(
 			cast(JSCContext*) context._cPtr,
-			null, cast(GCallback)&callback, userData, null, GTypeEnum.None, 1, GTypeEnum
+			null, cast(GCallback)&callback, stringTest, null, GTypeEnum.String, 1, GTypeEnum
 				.Float);
 
 	jsc_context_set_value(cast(JSCContext*) context._cPtr, "test", test);
