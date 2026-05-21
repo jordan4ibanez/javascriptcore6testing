@@ -50,10 +50,12 @@ void main() {
 		// Passed in from D.
 		writeln(userData.fromStringz);
 
+		// GTK takes over for C deallocation (I think).
+		const hl = "hello from the callback!";
 		char* retVal = cast(char*) malloc(char.sizeof * hl.length + 1);
-
 		retVal[0 .. hl.length + 1] = hl ~ '\0';
 
+		// Passing back out to D using GTK wrapper.
 		return retVal;
 	}
 
