@@ -74,9 +74,11 @@ void main() {
 
 	jsc_context_set_value(cast(JSCContext*) context._cPtr, "test", test);
 
-	eval("test(1);");
+	Value output = eval("test(1);");
 
-	writeln(stringTest[0 .. 11]);
+	if (output.isString()) {
+		writeln(output.toString_);
+	}
 
 	context.destroy();
 
