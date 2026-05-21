@@ -1,9 +1,12 @@
 {
 	"description": "testing",
-	"license": "MIT",
+	"dependencies": {
+		"gid:javascriptcore6": "~>0.9.11"
+	},
 	"authors": [
 		"jordan4ibanez"
 	],
 	"copyright": "Copyright © 2026, jordan4ibanez",
+	"license": "MIT",
 	"name": "javascriptcore6testing"
 }
