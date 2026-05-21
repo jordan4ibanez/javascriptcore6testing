@@ -41,6 +41,7 @@ void main() {
 		writeln("I am a callback!");
 	}
 
+	JSCValue* test =
 	jsc_value_new_function(cast(JSCContext*) context._cPtr, "test", &callback, null, null, GTypeFlags.None, 0);
 
 }
