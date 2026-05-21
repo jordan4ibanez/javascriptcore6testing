@@ -63,6 +63,9 @@ void main() {
 		writeln("destroy!!");
 	}
 
+	// Userdata getting passed in.
+	string stringTest = "hello from D";
+
 	JSCValue* test =
 		jsc_value_new_function(
 			cast(JSCContext*) context._cPtr,
