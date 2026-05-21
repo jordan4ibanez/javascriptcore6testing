@@ -31,8 +31,8 @@ void main() {
 	JSCContext* context          = cast(JSCContext*) context._cPtr
 	const(char)* name            = null (assigned after)
 	GCallback callback           = cast(GCallback)&callback
-	void* userData               = stringTest
-	GDestroyNotify destroyNotify = null
+	void* userData               = cast(void*) stringTest
+	GDestroyNotify destroyNotify = destroyNotify
 	GType returnType             = GTypeFlags.None
 	uint nParams                 = 1
 	... (this is variadic)       = A list of GTypes, one for each parameter.
@@ -58,14 +58,20 @@ void main() {
 		return retVal;
 	}
 
+	extern (C) void destroyNotify(void* data) {
+		writeln("destroy!!");
+	}
+
 	JSCValue* test =
 		jsc_value_new_function(
 			cast(JSCContext*) context._cPtr,
-			null, cast(GCallback)&callback, cast(void*) stringTest, null, GTypeEnum.String, 1, GTypeEnum
+			null, cast(GCallback)&callback, cast(void*) stringTest, &destroyNotify, GTypeEnum.String, 1, GTypeEnum
 				.Float);
 
 	jsc_context_set_value(cast(JSCContext*) context._cPtr, "test", test);
 
 	eval("test(1);");
+
+	writeln(stringTest[0 .. 11]);
 
 }
