@@ -2,6 +2,7 @@ import javascriptcore.c.functions;
 import javascriptcore.context;
 import javascriptcore.exception;
 import javascriptcore.global;
+import javascriptcore.types;
 import javascriptcore.value;
 import javascriptcore.virtual_machine;
 import std.stdio;
@@ -22,16 +23,16 @@ void main() {
 	}
 
 	/*
-	JSCContext* context
-	const(char)* name
-	GCallback callback
-	void* userData
-	GDestroyNotify destroyNotify
-	GType returnType
-	uint nParams
-	... (this is variadic)
+	JSCContext* context          = context._cPtr
+	const(char)* name            = "test"
+	GCallback callback           = null
+	void* userData               = null
+	GDestroyNotify destroyNotify = null
+	GType returnType             = GTypeFlags.None
+	uint nParams                 = 0
+	... (this is variadic)       = (nothing)
 	*/
 
-	jsc_value_new_function(context._cPtr, "test", null, null);
+	jsc_value_new_function(context._cPtr, "test", null, null, GTypeFlags.None, 0);
 
 }
