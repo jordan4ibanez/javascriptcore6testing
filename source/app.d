@@ -47,8 +47,8 @@ void main() {
 		// Passed in from javascript.
 		writeln("I am a callback! also: ", number);
 
-		// I can't figure out how to not make this crash so let's just use C.
-		const hl = "hello world";
+		// Passed in from D.
+		writeln(userData.fromStringz);
 
 		char* retVal = cast(char*) malloc(char.sizeof * hl.length + 1);
 
