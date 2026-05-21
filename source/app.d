@@ -69,7 +69,7 @@ void main() {
 	JSCValue* test =
 		jsc_value_new_function(
 			cast(JSCContext*) context._cPtr,
-			null, cast(GCallback)&callback, cast(void*) stringTest, &destroyNotify, GTypeEnum.String, 1, GTypeEnum
+			null, cast(GCallback)&callback, cast(void*) stringTest.toStringz, &destroyNotify, GTypeEnum.String, 1, GTypeEnum
 				.Float);
 
 	jsc_context_set_value(cast(JSCContext*) context._cPtr, "test", test);
