@@ -44,4 +44,6 @@ void main() {
 	JSCValue* test =
 		jsc_value_new_function(cast(JSCContext*) context._cPtr, "test", &callback, null, null, GTypeFlags.None, 0);
 
+	eval("test();");
+
 }
