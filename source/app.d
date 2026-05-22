@@ -27,6 +27,10 @@ void main() {
 		return output;
 	}
 
+	bool jitEnabled;
+	bool pollResult = optionsGetBoolean(OPTIONS_USE_JIT, jitEnabled);
+	writeln("jit? ", jitEnabled, " ", pollResult);
+
 	// alias extern(C) void function() GCallback;
 	/*
 	JSCContext* context          = cast(JSCContext*) context._cPtr
