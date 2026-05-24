@@ -27,9 +27,8 @@ void main() {
 		return output;
 	}
 
-	context.registerFunction("test", (string input) {
-		writeln("test ", input);
-	});
+	// Fancy new way of registering a function.
+	context.registerFunction("test", (string input) { writeln("test ", input); });
 
 	Value output = eval("test(1);");
 
