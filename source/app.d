@@ -1,6 +1,7 @@
 import gobject.types;
 import javascriptcore.c.functions;
 import javascriptcore.c.types;
+import javascriptcore.class_;
 import javascriptcore.context;
 import javascriptcore.exception;
 import javascriptcore.global;
@@ -39,6 +40,10 @@ void main() {
 
 	// Fancy new way of registering a function.
 	context.registerFunction("test", (string input) { writeln("test ", input); });
+
+	// Registering a class.
+	ClassVTable vTable;
+	auto testing = context.registerClass(MyCoolClass.stringof, null, vTable, null);
 
 	Value output = eval("test(1);");
 
