@@ -27,6 +27,11 @@ void main() {
 	// And then get the VM.
 	VirtualMachine vm = context.getVirtualMachine();
 
+	/// Evaluate javascript code. (run it)
+	/// Params:
+	///   jsCode = The code to evaluate.
+	///   autoPrint = If the evaluation returns a string, should it write to the console?
+	/// Returns: The evaluated value.
 	Value eval(string jsCode, bool autoPrint = true) {
 		Value output = context.evaluate(jsCode);
 
