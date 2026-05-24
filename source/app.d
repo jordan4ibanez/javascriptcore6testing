@@ -171,6 +171,9 @@ void main() {
 
 	jsc_value_object_set_property(globalObject, "MyCoolClass".toStringz, constructorValue);
 
+	// Give a way to print.
+	context.registerFunction("writeln", (string input...) { writeln(input); });
+
 	int i = 0;
 
 	eval("let x = new MyCoolClass();");
@@ -178,7 +181,7 @@ void main() {
 	while (true) {
 		eval(`
 		(() => {
-			// x.count();
+			x.count();
 			let blah = new MyCoolClass();
 		})();
 	`);
