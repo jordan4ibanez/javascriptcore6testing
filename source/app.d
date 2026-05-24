@@ -9,6 +9,16 @@ import javascriptcore.value;
 import javascriptcore.virtual_machine;
 import std.stdio;
 
+class MyCoolClass {
+
+	int counter = 0;
+
+	void count() {
+		writeln("Count! ", this.counter);
+		counter++;
+	}
+}
+
 void main() {
 	// Auto creates a VM.
 	Context context = new Context();
