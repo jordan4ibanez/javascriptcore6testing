@@ -1,6 +1,6 @@
 {
 	"fileVersion": 1,
 	"versions": {
-		"gid": "0.9.12"
+		"gid": {"version":"0da9b388f0f48d5dd32fa935e0712f00f343ac64","repository":"git+https://github.com/Kymorphia/gid.git"}
 	}
 }
