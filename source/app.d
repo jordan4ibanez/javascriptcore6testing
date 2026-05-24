@@ -61,6 +61,19 @@ void main() {
 	ClassVTable vTable;
 	auto testing = context.registerClass(MyCoolClass.stringof, null, vTable, null);
 
+	//JSCValue* function(
+	//  JSCClass* jscClass,
+	//  const(char)* name,
+	//  GCallback callback, 
+	//  void* userData, 
+	//  GDestroyNotify destroyNotify,
+	//  GType returnType, 
+	//  uint nParams, 
+	//  ..., <- This is your constructor parameter list.
+	//  void* HIDDEN <- this is where userdata gets passed in.
+	//)c_jsc_class_add_constructor;
+	// jsc_class_add_constructor();
+
 	eval("test(1);");
 
 	context.destroy();
