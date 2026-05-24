@@ -27,56 +27,9 @@ void main() {
 		return output;
 	}
 
-	bool jitEnabled;
-	bool pollResult = optionsGetBoolean(OPTIONS_USE_JIT, jitEnabled);
-	writeln("jit? ", jitEnabled, " ", pollResult);
-
-	// alias extern(C) void function() GCallback;
-	/*
-	JSCContext* context          = cast(JSCContext*) context._cPtr
-	const(char)* name            = null (assigned after)
-	GCallback callback           = cast(GCallback)&callback
-	void* userData               = cast(void*) stringTest
-	GDestroyNotify destroyNotify = destroyNotify
-	GType returnType             = GTypeFlags.None
-	uint nParams                 = 1
-	... (this is variadic)       = A list of GTypes, one for each parameter.
-	*/
-
-	import std.string;
-
-	extern (C) const(char)* callback(float number, const(char)* userData) {
-		import core.stdc.stdlib;
-
-		// Passed in from javascript.
-		writeln("I am a callback! also: ", number);
-
-		// Passed in from D.
-		writeln(userData.fromStringz);
-
-		// GTK takes over for C deallocation (I think).
-		const hl = "hello from the callback!";
-		char* retVal = cast(char*) malloc(char.sizeof * hl.length + 1);
-		retVal[0 .. hl.length + 1] = hl ~ '\0';
-
-		// Passing back out to D using GTK wrapper.
-		return retVal;
-	}
-
-	extern (C) void destroyNotify(void* data) {
-		writeln("destroy!!");
-	}
-
-	// Userdata getting passed in.
-	string stringTest = "hello from D";
-
-	JSCValue* test =
-		jsc_value_new_function(
-			cast(JSCContext*) context._cPtr,
-			null, cast(GCallback)&callback, cast(void*) stringTest.toStringz, &destroyNotify, GTypeEnum.String, 1, GTypeEnum
-				.Float);
-
-	jsc_context_set_value(cast(JSCContext*) context._cPtr, "test", test);
+	context.registerFunction("test", (string input) {
+		writeln("test ", input);
+	});
 
 	Value output = eval("test(1);");
 
