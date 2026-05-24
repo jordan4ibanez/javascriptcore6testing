@@ -19,11 +19,11 @@ class MyCoolClass {
 	int counter = 0;
 
 	this() {
-		// writeln("hello, I am ", MyCoolClass.stringof);
+		writeln("hello, I am ", MyCoolClass.stringof);
 	}
 
 	~this() {
-		writeln("peace from ", cast(void*) this);
+		// writeln("peace from ", cast(void*) this);
 	}
 
 	void count() {
@@ -69,46 +69,33 @@ void main() {
 		writeln(input, " | ", count);
 	});
 
-	// Registering a class.
-	ClassVTable* vTable = null;
+	// Give a way to print.
+	context.registerFunction("writeln", (string input...) { writeln(input); });
 
-	extern (C) void destroyNotify(void* userData) {
+	/**
+	* //! This was rewritten to:
+  javascriptcore.class_.Class registerClass(string name, javascriptcore.class_.Class parentClass, 
+  javascriptcore.types.ClassVTable vtable, GDestroyNotify dstryNot = null)
+  {
+    JSCClass* _cretval;
+    const(char)* _name = name.toCString(No.Alloc);
+    _cretval = jsc_context_register_class(cast(JSCContext*)this._cPtr, _name, parentClass ? cast(JSCClass*)parentClass._cPtr(No.Dup) : null, &vtable, dstryNot);
+    auto _retval = gobject.object.ObjectWrap._getDObject!(javascriptcore.class_.Class)(cast(JSCClass*)_cretval, No.Take);
+    return _retval;
+  }
 
-		if (userData !is null) {
+	*/
 
-			//! This is an extreme hack to get the original memory address.
-			JSCValue* rawData = jsc_value_object_get_property(cast(JSCValue*) userData, "ptr"
-					.toStringz);
-			string addressString = jsc_value_to_string(rawData).fromStringz.idup;
-			void* address = cast(void*) parse!ulong(addressString, 16);
-			MyCoolClass neat = cast(MyCoolClass) address;
-			neat.destroy();
-			GC.removeRoot(address);
-			GC.free(address);
-
-		}
+	// This has the chance of getting overwritten by C lol.
+	extern (C) union HackJob(T) if (is(T == class)) {
+	align(8):
+		size_t jscValue;
+		T dData;
 	}
-
-	// JSCClass* function(
-	//  JSCContext* context,         = cast(JSCContext*) context._cPtr
-	//  const(char)* name,           = "MyCoolClass"
-	//  JSCClass* parentClass,       = null
-	//  JSCClassVTable* vtable,      = vTable
-	//  GDestroyNotify destroyNotify = destroyNotify
-	//) c_jsc_context_register_class;
-
-	JSCClass* jsMyCoolClass = jsc_context_register_class(
-		cast(JSCContext*) context._cPtr, "MyCoolClass".toStringz, null, vTable, cast(GDestroyNotify)&destroyNotify);
 
 	extern (C) JSCValue* constructorCallBack(void* userData) {
 
 		//? Being passed in: Tuple!(void*, JSCClass*)* environmentData
-
-		MyCoolClass dGCData = new MyCoolClass();
-
-		// Prevent the GC from crashing this.
-		//! This is now "manual" memory management !
-		GC.addRoot(cast(void*) dGCData);
 
 		// Now unpack the tuple pointer that was passed in.
 		Tuple!(void*, JSCClass*)* environmentData = cast(Tuple!(void*, JSCClass*)*) userData;
@@ -118,15 +105,20 @@ void main() {
 
 		JSCClass* classPointer = cast(JSCClass*)(*environmentData)[1];
 
-		// Create the javascript object.
-		JSCValue* object = jsc_value_new_object(contextPointer, cast(void*) dGCData, classPointer);
+		// Now managed by C memory.
+		HackJob!MyCoolClass* cMangling = cast(HackJob!MyCoolClass*) malloc(
+			HackJob!MyCoolClass.sizeof);
 
-		string address = format("%X", cast(size_t) cast(void*) dGCData);
-		jsc_value_object_set_property(object, "ptr", jsc_value_new_string(contextPointer, address
-				.toStringz));
+		MyCoolClass outputData = new MyCoolClass();
 
-		// Now return a C anchored D class.
-		return object;
+		// Needs to be assigned in this order or it crashes.
+
+		cMangling.dData = outputData;
+
+		cMangling.jscValue = *(cast(size_t*) jsc_value_new_object(contextPointer, cast(
+				void*) outputData, classPointer));
+
+		return cast(JSCValue*) cMangling;
 	}
 
 	//JSCValue* function(
@@ -145,13 +137,14 @@ void main() {
 	// It must pass in the context and the class data.
 
 	Tuple!(void*, JSCClass*)* environmentData = new Tuple!(void*, JSCClass*)(
-		context._cPtr, jsMyCoolClass);
+		context._cPtr, cast(JSCClass*) jsMyCoolClass._cPtr);
+
 	//! Stop the GC from destroying this.
 	GC.addRoot(environmentData);
 
 	JSCValue* constructorValue = jsc_class_add_constructor(
-		cast(JSCClass*) jsMyCoolClass, "MyCoolClass".toStringz, cast(GCallback)&constructorCallBack, environmentData, null,
-		GTypeEnum.Object, 0);
+		cast(JSCClass*) jsMyCoolClass._cPtr, "MyCoolClass".toStringz, cast(GCallback)&constructorCallBack, environmentData,
+		null, GTypeEnum.Object, 0);
 
 	//void function(
 	//  JSCClass* jscClass,
@@ -165,14 +158,11 @@ void main() {
 	// HIDDEN <- userdata
 	//) c_jsc_class_add_method; ///
 
-	jsc_class_add_method(jsMyCoolClass, "count", cast(GCallback)&MyCoolClass.count, null, null, GTypeEnum.None, 0);
+	jsc_class_add_method(cast(JSCClass*) jsMyCoolClass._cPtr, "count", cast(GCallback)&MyCoolClass.count, null, null,
+		GTypeEnum.None, 0);
 
-	JSCValue* globalObject = jsc_context_get_global_object(cast(JSCContext*) context._cPtr);
-
-	jsc_value_object_set_property(globalObject, "MyCoolClass".toStringz, constructorValue);
-
-	// Give a way to print.
-	context.registerFunction("writeln", (string input...) { writeln(input); });
+	jsc_value_object_set_property(cast(JSCValue*) context.getGlobalObject()
+			._cPtr, "MyCoolClass".toStringz, constructorValue);
 
 	int i = 0;
 
@@ -183,8 +173,14 @@ void main() {
 		(() => {
 			x.count();
 			let blah = new MyCoolClass();
+
+			writeln(x.counter);
+
+			// if (x.counter > 1000) {
+
+			// }
 		})();
-	`);
+	 `);
 		GC.collect();
 		GC.minimize();
 		i++;
