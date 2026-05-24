@@ -27,7 +27,7 @@ void main() {
 	// And then get the VM.
 	VirtualMachine vm = context.getVirtualMachine();
 
-	Value eval(string jsCode) {
+	Value eval(string jsCode, bool autoPrint = true) {
 		Value output = context.evaluate(jsCode);
 
 		// This is how you check for errors.
@@ -35,6 +35,11 @@ void main() {
 		if (except !is null) {
 			writeln(except.toString_);
 		}
+
+		if (autoPrint && output.isString()) {
+			writeln(output.toString_);
+		}
+
 		return output;
 	}
 
@@ -45,11 +50,7 @@ void main() {
 	ClassVTable vTable;
 	auto testing = context.registerClass(MyCoolClass.stringof, null, vTable, null);
 
-	Value output = eval("test(1);");
-
-	if (output.isString()) {
-		writeln(output.toString_);
-	}
+	eval("test(1);");
 
 	context.destroy();
 
