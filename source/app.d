@@ -77,15 +77,14 @@ void main() {
 		if (userData !is null) {
 
 			//! This is an extreme hack to get the original memory address.
-
-			// JSCValue* rawData = jsc_value_object_get_property(cast(JSCValue*) userData, "__d_ptr"
-			// 		.toStringz);
-			// string addressString = jsc_value_to_string(rawData).fromStringz.idup;
-			// void* address = cast(void*) parse!ulong(addressString, 16);
-			// MyCoolClass neat = cast(MyCoolClass) address;
-			// neat.destroy();
-			// GC.removeRoot(address);
-			// GC.free(address);
+			JSCValue* rawData = jsc_value_object_get_property(cast(JSCValue*) userData, "ptr"
+					.toStringz);
+			string addressString = jsc_value_to_string(rawData).fromStringz.idup;
+			void* address = cast(void*) parse!ulong(addressString, 16);
+			MyCoolClass neat = cast(MyCoolClass) address;
+			neat.destroy();
+			GC.removeRoot(address);
+			GC.free(address);
 
 		}
 	}
@@ -109,7 +108,7 @@ void main() {
 
 		// Prevent the GC from crashing this.
 		//! This is now "manual" memory management !
-		// GC.addRoot(cast(void*) dGCData);
+		GC.addRoot(cast(void*) dGCData);
 
 		// Now unpack the tuple pointer that was passed in.
 		Tuple!(void*, JSCClass*)* environmentData = cast(Tuple!(void*, JSCClass*)*) userData;
@@ -122,9 +121,9 @@ void main() {
 		// Create the javascript object.
 		JSCValue* object = jsc_value_new_object(contextPointer, cast(void*) dGCData, classPointer);
 
-		// string address = format("%X", cast(size_t) cast(void*) dGCData);
-		// jsc_value_object_set_property(object, "__d_ptr", jsc_value_new_string(contextPointer, address
-		// 		.toStringz));
+		string address = format("%X", cast(size_t) cast(void*) dGCData);
+		jsc_value_object_set_property(object, "ptr", jsc_value_new_string(contextPointer, address
+				.toStringz));
 
 		// Now return a C anchored D class.
 		return object;
@@ -179,7 +178,7 @@ void main() {
 	while (true) {
 		eval(`
 		(() => {
-			x.count();
+			// x.count();
 			let blah = new MyCoolClass();
 		})();
 	`);
