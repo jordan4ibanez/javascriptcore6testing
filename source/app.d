@@ -49,7 +49,13 @@ void main() {
 	}
 
 	// Fancy new way of registering a function.
-	context.registerFunction("test", (string input) { writeln("test ", input); });
+
+	int count;
+
+	context.registerFunction("test", (string input) {
+		count++;
+		writeln(input, " | ", count);
+	});
 
 	// Registering a class.
 	ClassVTable vTable;
