@@ -23,7 +23,7 @@ class MyCoolClass {
 	}
 
 	~this() {
-		// writeln("peace from ", cast(void*) this);
+		writeln("peace from ", cast(void*) this);
 	}
 
 	void count() {
