@@ -55,12 +55,37 @@ class MyCoolClass {
 	}
 }
 
+/// This makes sure you have npm and npx.
 bool npxTest() {
 	Tuple!(int, "status", string, "output") output = executeShell("npx --version");
 	if (output.status != 0) {
 		writeln("Error: npx not found.");
 		return false;
+	} else {
+		writeln("npx was found.");
 	}
+	return true;
+}
+
+/// This one automatically installs typescript.
+bool autoTypeScriptInstall() {
+	Tuple!(int, "status", string, "output") output = executeShell("npx --no-install tsc");
+
+	if (output.status != 0) {
+		writeln("TypeScript not found. Installing.");
+
+		Tuple!(int, "status", string, "output") tsInstallOutput = executeShell(
+			"npm install -D typescript");
+
+		if (tsInstallOutput.status != 0) {
+			writeln("Error: TypeScript failed to install.");
+		} else {
+			writeln("TypeScript installed.");
+		}
+	} else {
+		writeln("TypeScript found.");
+	}
+
 	return true;
 }
 
@@ -74,6 +99,8 @@ void main() {
 	if (!npxTest()) {
 		return;
 	}
+
+	autoTypeScriptInstall();
 
 	/// Evaluate javascript code. (run it)
 	/// Params:
