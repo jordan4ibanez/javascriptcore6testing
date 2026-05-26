@@ -73,19 +73,23 @@ void main() {
 		auto output = SumType!(Value, ExceptionWrap)();
 
 		// This is how you check for errors.
+
+		// If it's an error, that's what we shall return.
 		ExceptionWrap except = context.getException();
 		if (except !is null) {
-
 			output = except;
 			writeln(except.toString_);
 			return output;
 		}
 
+		// Autoprint niceties.
 		if (autoPrint && evaluationOutput.isString()) {
 			writeln(evaluationOutput.toString_);
 		}
 
-		return evaluationOutput;
+		output = evaluationOutput;
+
+		return output;
 	}
 
 	/// Load a JS file.
