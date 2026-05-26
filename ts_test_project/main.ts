@@ -10,7 +10,7 @@ class T {
     test?: F;
 }
 
-console.log(new T().test!.cool)
 
-const t = new ACoolTest();
+writeln("testing");
+
 
