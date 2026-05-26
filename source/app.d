@@ -174,8 +174,22 @@ void main() {
 		// If it's an error, that's what we shall return.
 		ExceptionWrap except = context.getException();
 		if (except !is null) {
+
 			output = except;
-			writeln(except.report());
+
+			uint line = except.getLineNumber();
+			uint column = except.getColumnNumber();
+
+			Tuple!(int, "status", string, "output") tsPos =
+				executeShell("node mapper.js ./dist/main.js.map " ~ to!string(
+						line) ~ " " ~ to!string(column));
+
+			string[] data = tsPos.output.split(" ");
+
+			const message = except.getMessage();
+
+			writeln(i"Error in $(data[0])($(data[1]), $(data[2])): $(message)");
+
 			return output;
 		}
 
