@@ -89,7 +89,15 @@ bool autoTypeScriptInstall() {
 }
 
 bool buildTypeScriptProject() {
+
+	writeln("Building TypeScript project.");
+
 	Tuple!(int, "status", string, "output") output = executeShell("npx tsc");
+
+	if (output.status != 0) {
+		writeln(output.output);
+		return false;
+	}
 
 	return true;
 }
