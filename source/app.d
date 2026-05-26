@@ -88,6 +88,7 @@ bool autoTypeScriptInstall() {
 	return true;
 }
 
+/// This one automatically installs esbuild.
 bool autoESBuildInstall() {
 
 	Tuple!(int, "status", string, "output") esBuildInstall = executeShell(
