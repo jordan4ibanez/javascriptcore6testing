@@ -1,8 +1,4 @@
 import core.memory;
-import gobject.types;
-import javascriptcore.c.functions;
-import javascriptcore.c.types;
-import javascriptcore.class_;
 import javascriptcore.context;
 import javascriptcore.exception;
 import javascriptcore.global;
@@ -20,6 +16,12 @@ class MyCoolClass {
 
 	static void registerJSVM(Context context) {
 		auto jsvmClass = context.registerClass!MyCoolClass;
+		context.setValue("MyCoolClass", jsvmClass.addConstructor!newFull);
+		jsvmClass.addMethod!count;
+	}
+
+	static MyCoolClass newFull() {
+		return new MyCoolClass;
 	}
 
 	this() {
