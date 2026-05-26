@@ -11,6 +11,6 @@ class T {
 }
 
 
-writeln("testing");
+writeln("Hello from TS from D with writeln called from TS!");
 
 
