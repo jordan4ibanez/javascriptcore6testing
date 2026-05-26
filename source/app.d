@@ -96,7 +96,7 @@ void main() {
 			return false;
 		}
 
-		writeln(data);
+		Value output = eval(data);
 
 		return true;
 	}
