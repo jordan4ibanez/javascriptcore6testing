@@ -1,3 +1,5 @@
+import { ACoolTest } from "./testing";
+
 console.log("test 1 2 3")
 
 class F {
@@ -9,4 +11,6 @@ class T {
 }
 
 console.log(new T().test!.cool)
+
+const t = new ACoolTest();
 
