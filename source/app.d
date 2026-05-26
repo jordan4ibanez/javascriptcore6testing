@@ -69,8 +69,7 @@ bool npxTest() {
 
 /// This one automatically installs typescript.
 bool autoTypeScriptInstall() {
-	Tuple!(int, "status", string, "output") output = executeShell("npx --no-install tsc");
-
+	Tuple!(int, "status", string, "output") output = executeShell("npx --no-install tsc -v");
 	if (output.status != 0) {
 		writeln("TypeScript not found. Installing.");
 
