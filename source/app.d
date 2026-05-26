@@ -110,9 +110,28 @@ bool autoESBuildInstall() {
 		writeln("esbuild found.");
 	}
 
-	// todo: make this it's own function.
-	Tuple!(int, "status", string, "output") sourcemapBuildInstall = executeShell(
-		"npm install -D source-map");
+	return true;
+}
+
+/// This one automatically installs source-map.
+bool autoSourcemapInstall() {
+	Tuple!(int, "status", string, "output") output = executeShell("npx --no-install source-map -v");
+
+	if (output.status != 0) {
+		writeln("source-map not found. Installing.");
+
+		Tuple!(int, "status", string, "output") sourcemapBuildInstall = executeShell(
+			"npm install -D source-map");
+
+		if (sourcemapBuildInstall.status != 0) {
+			writeln("Error: source-map failed to install.");
+			return false;
+		} else {
+			writeln("source-map installed.");
+		}
+	} else {
+		writeln("source-map found.");
+	}
 
 	return true;
 }
