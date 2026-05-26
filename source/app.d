@@ -177,6 +177,10 @@ void main() {
 		return;
 	}
 
+	if (!autoSourcemapInstall()) {
+		return;
+	}
+
 	/// Evaluate javascript code. (run it)
 	/// Params:
 	///   jsCode = JS code to evaluate.
