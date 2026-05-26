@@ -13,4 +13,7 @@ class T {
 
 writeln("Hello from TS from D with writeln called from TS!");
 
-
+// D native class.
+const thing = new MyCoolClass();
+thing.count();
+writeln(thing.counter);
