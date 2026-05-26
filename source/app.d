@@ -176,11 +176,11 @@ void main() {
 		return;
 	}
 
-	if (!buildTypeScriptProject()) {
+	if (!autoSourcemapInstall()) {
 		return;
 	}
 
-	if (!autoSourcemapInstall()) {
+	if (!buildTypeScriptProject()) {
 		return;
 	}
 
