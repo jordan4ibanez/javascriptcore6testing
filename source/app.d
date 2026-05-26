@@ -88,6 +88,12 @@ bool autoTypeScriptInstall() {
 	return true;
 }
 
+bool buildTypeScriptProject() {
+	Tuple!(int, "status", string, "output") output = executeShell("npx tsc");
+
+	return true;
+}
+
 void main() {
 	// Auto creates a VM.
 	Context context = new Context();
@@ -100,6 +106,10 @@ void main() {
 	}
 
 	if (!autoTypeScriptInstall()) {
+		return;
+	}
+
+	if (!buildTypeScriptProject()) {
 		return;
 	}
 
