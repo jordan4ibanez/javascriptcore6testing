@@ -47,7 +47,7 @@ class MyCoolClass {
 	}
 
 	void count() {
-		writeln("Count! ", this.counter);
+		// writeln("Count! ", this.counter);
 		counter++;
 	}
 }
@@ -103,7 +103,11 @@ void main() {
 			x.count();
 			let blah = new MyCoolClass();
 
-			writeln(x.counter);
+			// writeln(x.counter);
+
+			if (x.counter % 1000 == 0) {
+				writeln(x.counter);
+			}
 		})();
 	 `);
 		GC.collect();
