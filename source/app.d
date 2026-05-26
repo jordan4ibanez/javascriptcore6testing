@@ -144,6 +144,10 @@ void main() {
 		return;
 	}
 
+	if (!autoESBuildInstall()) {
+		return;
+	}
+
 	if (!buildTypeScriptProject()) {
 		return;
 	}
