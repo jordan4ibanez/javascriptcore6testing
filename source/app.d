@@ -110,6 +110,10 @@ bool autoESBuildInstall() {
 		writeln("esbuild found.");
 	}
 
+	// todo: make this it's own function.
+	Tuple!(int, "status", string, "output") sourcemapBuildInstall = executeShell(
+		"npm install -D source-map");
+
 	return true;
 }
 
