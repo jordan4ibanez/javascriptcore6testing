@@ -78,6 +78,7 @@ bool autoTypeScriptInstall() {
 
 		if (tsInstallOutput.status != 0) {
 			writeln("Error: TypeScript failed to install.");
+			return false;
 		} else {
 			writeln("TypeScript installed.");
 		}
