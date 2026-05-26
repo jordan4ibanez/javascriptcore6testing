@@ -9,6 +9,7 @@ import std.conv;
 import std.file;
 import std.stdio;
 import std.string;
+import std.sumtype;
 import std.typecons;
 
 class MyCoolClass {
@@ -66,7 +67,10 @@ void main() {
 	///   autoPrint = If the evaluation returns a string, should it write to the console?
 	/// Returns: The evaluated value.
 	Value eval(string jsCode, bool autoPrint = true) {
-		Value output = context.evaluate(jsCode);
+
+		Value evaluationOutput = context.evaluate(jsCode);
+
+		// auto output = SumType!(Value, ExceptionWrap)();
 
 		// This is how you check for errors.
 		ExceptionWrap except = context.getException();
@@ -74,11 +78,11 @@ void main() {
 			writeln(except.toString_);
 		}
 
-		if (autoPrint && output.isString()) {
-			writeln(output.toString_);
+		if (autoPrint && evaluationOutput.isString()) {
+			writeln(evaluationOutput.toString_);
 		}
 
-		return output;
+		return evaluationOutput;
 	}
 
 	/// Load a JS file.
