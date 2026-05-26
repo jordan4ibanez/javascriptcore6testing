@@ -6,6 +6,7 @@ import javascriptcore.types;
 import javascriptcore.value;
 import javascriptcore.virtual_machine;
 import std.conv;
+import std.file;
 import std.stdio;
 import std.string;
 import std.typecons;
@@ -94,6 +95,10 @@ void main() {
 
 	// Register MyCoolClass.
 	MyCoolClass.registerJSVM(context);
+
+	string data = readText("./cool.js");
+
+	writeln(data);
 
 	context.destroy();
 
