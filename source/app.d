@@ -18,6 +18,15 @@ class MyCoolClass {
 		auto jsvmClass = context.registerClass!MyCoolClass;
 		context.setValue("MyCoolClass", jsvmClass.addConstructor!newFull);
 		jsvmClass.addMethod!count;
+		jsvmClass.addProperty!(counterGetter, counterSetter)("counter");
+	}
+
+	int counterGetter() {
+		return counter;
+	}
+
+	void counterSetter(int n) {
+		counter = n;
 	}
 
 	static MyCoolClass newFull() {
@@ -90,10 +99,6 @@ void main() {
 			let blah = new MyCoolClass();
 
 			writeln(x.counter);
-
-			// if (x.counter > 1000) {
-
-			// }
 		})();
 	 `);
 		GC.collect();
