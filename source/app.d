@@ -171,7 +171,7 @@ void main() {
 		ExceptionWrap except = context.getException();
 		if (except !is null) {
 			output = except;
-			writeln(except.toString_);
+			writeln(except.report());
 			return output;
 		}
 
