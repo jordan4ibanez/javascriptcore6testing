@@ -99,7 +99,9 @@ void main() {
 		return;
 	}
 
-	autoTypeScriptInstall();
+	if (!autoTypeScriptInstall()) {
+		return;
+	}
 
 	/// Evaluate javascript code. (run it)
 	/// Params:
