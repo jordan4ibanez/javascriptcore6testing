@@ -7,6 +7,7 @@ import javascriptcore.value;
 import javascriptcore.virtual_machine;
 import std.conv;
 import std.file;
+import std.process;
 import std.stdio;
 import std.string;
 import std.sumtype;
@@ -54,12 +55,25 @@ class MyCoolClass {
 	}
 }
 
+bool npxTest() {
+	Tuple!(int, "status", string, "output") output = executeShell("npx --version");
+	if (output.status != 0) {
+		writeln("Error: npx not found.");
+		return false;
+	}
+	return true;
+}
+
 void main() {
 	// Auto creates a VM.
 	Context context = new Context();
 
 	// And then get the VM.
 	VirtualMachine vm = context.getVirtualMachine();
+
+	if (!npxTest()) {
+		return;
+	}
 
 	/// Evaluate javascript code. (run it)
 	/// Params:
