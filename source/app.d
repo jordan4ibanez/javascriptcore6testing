@@ -95,26 +95,6 @@ void main() {
 	// Register MyCoolClass.
 	MyCoolClass.registerJSVM(context);
 
-	// eval("let x = new MyCoolClass();");
-
-	// while (true) {
-	// 	eval(`
-	// 	(() => {
-	// 		x.count();
-	// 		let blah = new MyCoolClass();
-
-	// 		// writeln(x.counter);
-
-	// 		if (x.counter % 1000 == 0) {
-	// 			writeln(x.counter);
-	// 		}
-	// 	})();
-	//  `);
-	// 	// GC.collect();
-	// 	// GC.minimize();
-
-	// }
-
 	context.destroy();
 
 }
