@@ -15,3 +15,5 @@ javascriptcore6testing-test-*
 *.o
 *.obj
 *.lst
+
+node_modules/*
