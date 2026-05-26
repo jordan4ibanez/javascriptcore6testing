@@ -144,7 +144,7 @@ void main() {
 	// Register MyCoolClass.
 	MyCoolClass.registerJSVM(context);
 
-	loadJsFile("./cool.js");
+	// loadJsFile("./cool.js");
 
 	context.destroy();
 
