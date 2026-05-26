@@ -110,8 +110,8 @@ void main() {
 			}
 		})();
 	 `);
-		GC.collect();
-		GC.minimize();
+		// GC.collect();
+		// GC.minimize();
 
 	}
 
