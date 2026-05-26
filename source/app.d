@@ -85,6 +85,10 @@ bool autoTypeScriptInstall() {
 		writeln("TypeScript found.");
 	}
 
+	// todo: set this up to not install every time
+	Tuple!(int, "status", string, "output") tsInstallOutput = executeShell(
+		"npm install -D esbuild");
+
 	return true;
 }
 
@@ -192,7 +196,7 @@ void main() {
 	// Register MyCoolClass.
 	MyCoolClass.registerJSVM(context);
 
-	// loadJsFile("./cool.js");
+	loadJsFile("./dist/main.js");
 
 	context.destroy();
 
