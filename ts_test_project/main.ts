@@ -10,4 +10,3 @@ class T {
 
 console.log(new T().test!.cool)
 
-bla
