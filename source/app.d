@@ -14,14 +14,12 @@ import std.stdio;
 import std.string;
 import std.typecons;
 
-const static extraLazyClassReg = "context.registerClass!(__traits(parent, __traits(parent, {})))";
-
 class MyCoolClass {
 
 	int counter = 0;
 
 	static void registerJSVM(Context context) {
-		auto jsvmClass = mixin(extraLazyClassReg);
+		auto jsvmClass = context.registerClass!MyCoolClass;
 	}
 
 	this() {
