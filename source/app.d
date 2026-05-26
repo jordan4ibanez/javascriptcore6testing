@@ -92,8 +92,23 @@ bool autoTypeScriptInstall() {
 /// This one automatically installs esbuild.
 bool autoESBuildInstall() {
 
-	Tuple!(int, "status", string, "output") esBuildInstall = executeShell(
-		"npm install -D esbuild");
+	Tuple!(int, "status", string, "output") output = executeShell("npx --no-install esbuild -v");
+
+	if (output.status != 0) {
+		writeln("esbuild not found. Installing.");
+
+		Tuple!(int, "status", string, "output") esBuildInstall = executeShell(
+			"npm install -D esbuild");
+
+		if (esBuildInstall.status != 0) {
+			writeln("Error: esbuild failed to install.");
+			return false;
+		} else {
+			writeln("esbuild installed.");
+		}
+	} else {
+		writeln("esbuild found.");
+	}
 
 	return true;
 }
