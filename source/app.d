@@ -99,6 +99,8 @@ bool buildTypeScriptProject() {
 		return false;
 	}
 
+	writeln("Built.");
+
 	return true;
 }
 
