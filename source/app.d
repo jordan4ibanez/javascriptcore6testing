@@ -5,6 +5,7 @@ import javascriptcore.global;
 import javascriptcore.types;
 import javascriptcore.value;
 import javascriptcore.virtual_machine;
+import std.algorithm;
 import std.conv;
 import std.file;
 import std.process;
@@ -115,9 +116,10 @@ bool autoESBuildInstall() {
 
 /// This one automatically installs source-map.
 bool autoSourcemapInstall() {
-	Tuple!(int, "status", string, "output") output = executeShell("npx --no-install source-map -v");
+	Tuple!(int, "status", string, "output") output = executeShell(
+		"node -e \"console.log(require('source-map'))\"");
 
-	if (output.status != 0) {
+	if (output.output.canFind("'MODULE_NOT_FOUND'")) {
 		writeln("source-map not found. Installing.");
 
 		Tuple!(int, "status", string, "output") sourcemapBuildInstall = executeShell(
