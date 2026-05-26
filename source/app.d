@@ -14,6 +14,8 @@ class MyCoolClass {
 
 	int counter = 0;
 
+	int[] fakeData;
+
 	static void registerJSVM(Context context) {
 		auto jsvmClass = context.registerClass!MyCoolClass;
 		context.setValue("MyCoolClass", jsvmClass.addConstructor!newFull);
@@ -34,7 +36,10 @@ class MyCoolClass {
 	}
 
 	this() {
-		writeln("hello, I am ", MyCoolClass.stringof);
+		// writeln("hello, I am ", MyCoolClass.stringof);
+
+		this.fakeData = new int[](1_000_000);
+
 	}
 
 	~this() {
