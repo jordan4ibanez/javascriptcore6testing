@@ -267,6 +267,8 @@ void main() {
 	// Register MyCoolClass.
 	MyCoolClass.registerJSVM(context);
 
+	writeln("=== BEGIN JSVM ====");
+
 	loadJsFile("./dist/main.js");
 
 	context.destroy();
