@@ -117,7 +117,9 @@ bool buildTypeScriptProject() {
 
 	writeln("Building TypeScript project.");
 
-	Tuple!(int, "status", string, "output") output = executeShell("npx tsc");
+	Tuple!(int, "status", string, "output") output =
+		executeShell(
+			"npx esbuild ts_test_project/main.ts --bundle --outfile=dist/main.js --sourcemap");
 
 	if (output.status != 0) {
 		writeln(output.output);
