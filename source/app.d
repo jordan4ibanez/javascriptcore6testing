@@ -78,6 +78,9 @@ void main() {
 	// Give a way to print.
 	context.registerFunction("writeln", (string input...) { writeln(input); });
 
+	// Register MyCoolClass.
+	MyCoolClass.registerJSVM(context);
+
 	eval("let x = new MyCoolClass();");
 
 	while (true) {
