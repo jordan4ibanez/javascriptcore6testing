@@ -63,9 +63,9 @@ void main() {
 
 	/// Evaluate javascript code. (run it)
 	/// Params:
-	///   jsCode = The code to evaluate.
-	///   autoPrint = If the evaluation returns a string, should it write to the console?
-	/// Returns: The evaluated value.
+	///   jsCode = JS code to evaluate.
+	///   autoPrint = If it should print things returned from javascript.
+	/// Returns: Sumtype of Value or if something blew up with ExceptionWrap.
 	SumType!(Value, ExceptionWrap) eval(string jsCode, bool autoPrint = true) {
 
 		Value evaluationOutput = context.evaluate(jsCode);
