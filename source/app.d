@@ -81,6 +81,26 @@ void main() {
 		return output;
 	}
 
+	/// Load a JS file.
+	/// Params:
+	///   filePath = Where your JS file is.
+	/// Returns: Success.
+	bool loadJsFile(string filePath) {
+
+		string data;
+
+		try {
+			data = readText(filePath);
+		} catch (FileException e) {
+			writeln(e);
+			return false;
+		}
+
+		writeln(data);
+
+		return true;
+	}
+
 	// Fancy new way of registering a function.
 
 	int count;
@@ -96,9 +116,7 @@ void main() {
 	// Register MyCoolClass.
 	MyCoolClass.registerJSVM(context);
 
-	string data = readText("./cool.js");
-
-	writeln(data);
+	loadJsFile("./cool.js");
 
 	context.destroy();
 
