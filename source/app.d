@@ -85,8 +85,12 @@ bool autoTypeScriptInstall() {
 		writeln("TypeScript found.");
 	}
 
-	// todo: set this up to not install every time
-	Tuple!(int, "status", string, "output") tsInstallOutput = executeShell(
+	return true;
+}
+
+bool autoESBuildInstall() {
+
+	Tuple!(int, "status", string, "output") esBuildInstall = executeShell(
 		"npm install -D esbuild");
 
 	return true;
