@@ -107,7 +107,10 @@ void main() {
 			return false;
 		}
 
-		Value output = eval(data);
+		// Let's go golfing woo!
+		if (eval(data).has!ExceptionWrap) {
+			return false;
+		}
 
 		return true;
 	}
